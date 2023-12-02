@@ -1,0 +1,15 @@
+[Unit]
+Description=framework2 Stats Checker Service %i
+PartOf=framework2.target
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+ExecStart=/var/www/framework2/scripts/stat_checker.php %i
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=framework2.target

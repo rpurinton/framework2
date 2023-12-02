@@ -1,0 +1,15 @@
+[Unit]
+Description=framework2 New Listings Service
+PartOf=framework2.target
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+ExecStart=/var/www/framework2/scripts/new_listings.php
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=framework2.target
