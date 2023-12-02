@@ -1,13 +1,10 @@
 [Unit]
-Description=Mi4rnft Target
-Wants=framework2-new-listings.service
-Wants=framework2-stat-checker@1.service
-Wants=framework2-stat-checker@2.service
-Wants=framework2-stat-checker@3.service
-Wants=framework2-stat-checker@4.service
-Wants=framework2-stat-checker@5.service
-Wants=framework2-stat-checker@6.service
-Wants=framework2-stat-checker@7.service
+Description=Framework2 Target
+Wants=framework2-timers.service
+Wants=framework2-consumer@1.service
+Wants=framework2-consumer@2.service
+Wants=framework2-consumer@3.service
+Wants=framework2-consumer@4.service
 After=network.target
 
 [Install]

@@ -1,5 +1,5 @@
 [Unit]
-Description=framework2 Stats Checker Service %i
+Description=framework2 Consumer Service %i
 PartOf=framework2.target
 After=network.target
 
@@ -7,7 +7,7 @@ After=network.target
 Type=simple
 User=root
 Group=root
-ExecStart=/var/www/framework2/scripts/stat_checker.php %i
+ExecStart=/var/www/framework2/scripts/consumer.php %i
 Restart=on-failure
 RestartSec=5
 

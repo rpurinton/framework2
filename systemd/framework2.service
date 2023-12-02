@@ -1,5 +1,5 @@
 [Unit]
-Description=framework2 New Listings Service
+Description=framework2 Timers Service
 PartOf=framework2.target
 After=network.target
 
@@ -7,7 +7,7 @@ After=network.target
 Type=simple
 User=root
 Group=root
-ExecStart=/var/www/framework2/scripts/new_listings.php
+ExecStart=/var/www/framework2/scripts/timers.php
 Restart=on-failure
 RestartSec=5
 
