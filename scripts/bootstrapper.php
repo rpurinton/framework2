@@ -3,7 +3,7 @@
 
 namespace RPurinton\Framework2;
 
-use RPurinton\Framework2\{MySQL, Error};
+use RPurinton\Framework2\Error;
 use RPurinton\Framework2\Consumers\Bootstrapper;
 
 $worker_id = $argv[1] ?? 0;
@@ -17,7 +17,7 @@ try {
     $log = LogFactory::create("new_listings-$worker_id") or throw new Error("failed to create log");
     set_exception_handler(function ($e) use ($log) {
         $log->debug($e->getMessage(), ["trace" => $e->getTrace()]);
-        $log->error($e->getMessage() . "\nCheck debug.log for more details.");
+        $log->error($e->getMessage());
         exit(1);
     });
 } catch (\Exception $e) {
@@ -31,5 +31,5 @@ try {
     exit(1);
 }
 
-$bs = new Bootstrapper($log, new MySQL($log)) or throw new Error("failed to create Bootstrapper");
+$bs = new Bootstrapper($log) or throw new Error("failed to create Bootstrapper");
 $bs->init() or throw new Error("failed to initialize Bootstrapper");

@@ -4,9 +4,9 @@
 namespace RPurinton\Framework2;
 
 use React\EventLoop\Loop;
-use RPurinton\Framework2\{MySQL, Error};
-use RPurinton\Framework2\RabbitMQ\Consumer;
-use RPurinton\Framework2\Consumers\StatCheckConsumer;
+use RPurinton\Framework2\Error;
+use RPurinton\Framework2\RabbitMQ\Consumer as MQConsumer;
+use RPurinton\Framework2\Consumers\Consumer;
 
 $worker_id = $argv[1] ?? 0;
 
@@ -19,7 +19,7 @@ try {
     $log = LogFactory::create("new_listings-$worker_id") or throw new Error("failed to create log");
     set_exception_handler(function ($e) use ($log) {
         $log->debug($e->getMessage(), ["trace" => $e->getTrace()]);
-        $log->error($e->getMessage() . "\nCheck debug.log for more details.");
+        $log->error($e->getMessage());
         exit(1);
     });
 } catch (\Exception $e) {
@@ -33,8 +33,8 @@ try {
     exit(1);
 }
 $loop = Loop::get();
-$nlc = new StatCheckConsumer($log, new MySQL($log), $loop, new Consumer) or throw new Error("failed to create NewListingsConsumer");
-$nlc->init() or throw new Error("failed to initialize NewListingsConsumer");
+$mqconsumer = new Consumer($log, $loop, new MQConsumer) or throw new Error("failed to create Consumer");
+$mqconsumer->init() or throw new Error("failed to initialize Consumer");
 $loop->addSignal(SIGINT, function () use ($loop, $log) {
     $log->info("SIGINT received, exiting...");
     $loop->stop();
